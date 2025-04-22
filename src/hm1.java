@@ -1,6 +1,6 @@
 import java.util.Scanner;
 
-public class Main {
+public class hm1 {
     public static boolean isInteger(String s) {
         try {
             Integer.parseInt(s);
