@@ -20,7 +20,7 @@ public class hm3 {
         schedule[6][1] = "do home work 7";
 
         Scanner scanner = new Scanner(System.in);
-
+        System.out.println("Welcome to the task manager! Type 'exit' to quit the program.");
         while (true) {
             System.out.println("Please, input the day of the week:");
             String input = scanner.nextLine().trim().toLowerCase();
