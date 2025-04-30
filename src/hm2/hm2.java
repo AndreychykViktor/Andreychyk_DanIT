@@ -1,67 +1,89 @@
 package hm2;
 
 import java.util.Scanner;
+import java.util.logging.ConsoleHandler;
 
 public class hm2 {
+    static void printTable(char[][] bord) {
+        for (int i = 0; i < 6; i++) {
+            if (i == 0) {
+                for (int j = 0; j < 5; j++) {
+                    System.out.printf(" %d |", j);
+                }
+                System.out.println(" 5 |");
+            }else{
+                for (int j = 0; j < 5; j++) {
+                    if (j == 0) {
+                        System.out.printf(" %d |", i);
+                    } else if (bord[i][j] == '*') {
+                        System.out.print(" * |");
+                    } else if (bord[i][j] == 'X') {
+                        System.out.print(" X |");
+                    } else {
+                        System.out.print(" - |");
+                    }
+                }
+                if (bord[i][5] == '*') {
+                    System.out.println(" * |");
+                } else if (bord[i][5] == 'X') {
+                    System.out.println(" X |");
+                } else {
+                    System.out.println(" - |");
+                }
+            }
+            System.out.println();
+        }
+    }
+
+
     static void Game2(String name) {
+        int randomAimRow = (int) (Math.random() * 5) + 1;
+        int randomAimColumn = (int) (Math.random() * 5) + 1;
         Scanner sc = new Scanner(System.in);
+        //System.out.printf("%d %d\n",randomAimRow, randomAimColumn);
         System.out.println("Let the game begin!");
-        int[] history_of_numbers = new int[101];
-        int user_number;
-        int interarations = 1;
-        int randomNumber = (int) (Math.random() * 100);
+        char[][] bord = new char[6][6];
+        int user_row, user_column;
+
         while(true) {
-            String numberString = sc.nextLine();
+            System.out.println("Enter the number of row (0-5): ");
+            String numberStringRow = sc.nextLine();
             try {
-                user_number = Integer.parseInt(numberString);
+                user_row = Integer.parseInt(numberStringRow);
+                if(user_row > 5 || user_row < 0) {
+                    System.out.println("Invalid number value");
+                    continue;
+                }
             } catch (NumberFormatException e) {
                 System.out.println("Invalid number format");
                 continue;
             }
-
-            history_of_numbers[user_number]++;
-            if (user_number == randomNumber) {
-                System.out.println("Congratulations " + name);
-                System.out.println("Random number was: " + randomNumber);
+            System.out.println("Enter the number of column (0-5): ");
+            String numberStringColumn = sc.nextLine();
+            try {
+                user_column = Integer.parseInt(numberStringColumn);
+                if(user_column > 5 || user_column < 0) {
+                    System.out.println("Invalid number value");
+                    continue;
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid number format");
+                continue;
+            }
+            bord[user_row][user_column] = '*';
+            if (user_row == randomAimRow && user_column == randomAimColumn) {
+                System.out.println("You have won!");
+                bord[user_row][user_column] = 'X';
+                printTable(bord);
                 break;
-            }
-            if (user_number > 100 || user_number < 0) {
-                System.out.println("Please enter a number between 0 and 100");
-            }
-            if (user_number > randomNumber) {
-                System.out.println("Your number is too high. Please, try again..");
-
-            }
-            if (user_number < randomNumber) {
-                System.out.println("Your number is too low. Please, try again..");
-
-            }
-            interarations++;
-        }
-        System.out.print("Your numbers: ");
-        for (int i = history_of_numbers.length - 1; i > 0; i--) { //need to use this method for controling {0}
-            if(history_of_numbers[i] > 0) {
-                System.out.printf("%d ", i);
+            }else{
+                printTable(bord);
             }
         }
-        System.out.println();
-        System.out.println("Count of try " + interarations);
     }
-
-
-
-
-
-
-
-
-
-
-
-
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        System.out.println("Enter your name:");
+        System.out.println("All Set. Get ready to rumble!");
         String name = sc.nextLine();
 
         Game2(name);
